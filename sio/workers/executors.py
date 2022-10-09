@@ -523,7 +523,7 @@ class Sio2JailExecutor(SandboxExecutor):
     REAL_TIME_LIMIT_ADDEND = 1000  # (in ms)
 
     def __init__(self):
-        super(Sio2JailExecutor, self).__init__('sio2jail_exec-sandbox')
+        super(Sio2JailExecutor, self).__init__('sio2jail_exec-sandbox-1.4.2')
 
     def _execute(self, command, **kwargs):
         options = []
@@ -532,7 +532,7 @@ class Sio2JailExecutor(SandboxExecutor):
             str(kwargs['mem_limit'] or self.DEFAULT_MEMORY_LIMIT) + 'K']
         options += ['--instruction-count-limit',
             str((kwargs['time_limit'] or self.DEFAULT_TIME_LIMIT) *
-            self.INSTRUCTIONS_PER_VIRTUAL_SECOND / 1000)]
+            self.INSTRUCTIONS_PER_VIRTUAL_SECOND // 1000)]
         options += ['--rtimelimit',
             str((kwargs['time_limit'] or self.DEFAULT_TIME_LIMIT) *
             self.REAL_TIME_LIMIT_MULTIPLIER + self.REAL_TIME_LIMIT_ADDEND)
