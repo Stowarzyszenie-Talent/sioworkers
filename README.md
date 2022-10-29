@@ -1,3 +1,10 @@
+# Additional features
+ - support for the GCC 10.2.1 compilation sandbox,
+   the one used at the Polish Olympiad in Informatics.
+ - sio2jail executor fixes, with a newer version hardcoded.
+
+Someday this will be made into a pull request upstream.
+
 # INSTALLATION
 
 ### for python 2 installation ###
