@@ -1,7 +1,8 @@
 # What is this repo?
-The version of sioworkers used by Stowarzyszenie Talent
+The version of sioworkers used by Stowarzyszenie Talent. 
 It's deployed on wyzwania.programuj.edu.pl and
 locally on camps.
+
 See the respective branches for additional info.
 
 # INSTALLATION
