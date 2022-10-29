@@ -1,7 +1,4 @@
-# This branch isn't too interesting, see the "wyzw"
-one.
-
-
+# This branch isn't too interesting, see the "wyzw" one.
 
 # INSTALLATION
 
