@@ -604,7 +604,6 @@ class Sio2JailExecutor(SandboxExecutor):
     def _execute(self, command, **kwargs):
         options = []
         options += ['-b', os.path.join(self.rpath, 'boxes/minimal') + ':/:ro']
-<<<<<<< HEAD
         options += [
             '--memory-limit',
             str(kwargs['mem_limit'] or self.DEFAULT_MEMORY_LIMIT) + 'K',
