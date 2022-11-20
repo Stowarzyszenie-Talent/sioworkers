@@ -641,7 +641,10 @@ class Sio2JailExecutor(SandboxExecutor):
             # reap zombies
             pid=1
             while pid!=0:
-                pid, _ = os.waitpid(-1, os.WNOHANG)
+                try:
+                    pid, _ = os.waitpid(-1, os.WNOHANG)
+                except OSError:
+                    break
 
             if renv['return_code'] != 0:
                 raise ExecError(
