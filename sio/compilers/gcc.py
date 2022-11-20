@@ -21,7 +21,12 @@ class CPPCompiler(CStyleCompiler):
         obj.compiler = 'g++'
         obj.options = ['-std=c++11', '-static', '-O2', '-s', '-lm']
         return obj
-
+    @classmethod
+    def gcc_10_2_1_cpp17(cls):
+        obj = cls('gcc.10_2_1')
+        obj.compiler = 'g++'
+        obj.options = ['-std=c++17', '-static', '-O3', '-s', '-lm']
+        return obj
 
 def run_gcc4_8_2_c99(environ):
     return CCompiler.gcc_4_8_2_c99().compile(environ)
@@ -35,6 +40,10 @@ def run_gplusplus4_8_2_cpp11(environ):
     return CPPCompiler.gcc_4_8_2_cpp11().compile(environ)
 
 
+def run_gplusplus10_2_1_cpp17(environ):
+    return CPPCompiler.gcc_10_2_1_cpp17().compile(environ)
+
+
 def run_gplusplus_default(environ):
     return CPPCompiler.gcc_4_8_2_cpp11().compile(environ)
 
@@ -43,3 +52,4 @@ run_c_default = run_gcc_default
 run_c_gcc4_8_2_c99 = run_gcc4_8_2_c99
 run_cpp_default = run_gplusplus_default
 run_cpp_gcc4_8_2_cpp11 = run_gplusplus4_8_2_cpp11
+run_cpp_gcc10_2_1_cpp17 = run_gplusplus10_2_1_cpp17
