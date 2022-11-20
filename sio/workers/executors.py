@@ -655,17 +655,17 @@ class Sio2JailExecutor(SandboxExecutor):
                 if key:
                     renv[key] = int(status_line[num])
 
-            if renv['result_string'] == 'ok':
+            if renv['result_string'] == b'ok':
                 renv['result_code'] = 'OK'
-            elif renv['result_string'] == 'time limit exceeded':
+            elif renv['result_string'] == b'time limit exceeded':
                 renv['result_code'] = 'TLE'
-            elif renv['result_string'] == 'real time limit exceeded':
+            elif renv['result_string'] == b'real time limit exceeded':
                 renv['result_code'] = 'TLE'
-            elif renv['result_string'] == 'memory limit exceeded':
+            elif renv['result_string'] == b'memory limit exceeded':
                 renv['result_code'] = 'MLE'
-            elif renv['result_string'].startswith('intercepted forbidden syscall'):
+            elif renv['result_string'].startswith(b'intercepted forbidden syscall'):
                 renv['result_code'] = 'RV'
-            elif renv['result_string'].startswith('process exited due to signal'):
+            elif renv['result_string'].startswith(b'process exited due to signal'):
                 renv['result_code'] = 'RE'
             else:
                 raise ExecError(
