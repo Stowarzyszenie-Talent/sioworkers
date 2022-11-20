@@ -639,7 +639,8 @@ class Sio2JailExecutor(SandboxExecutor):
                 command + [noquote('2>'), result_file.name], **kwargs
             )
             # reap zombies
-            while pid:
+            pid=1
+            while pid!=0:
                 pid, _ = os.waitpid(-1, os.WNOHANG)
 
             if renv['return_code'] != 0:
