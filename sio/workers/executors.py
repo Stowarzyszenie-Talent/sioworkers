@@ -7,6 +7,7 @@ from threading import Timer
 import logging
 import re
 import sys
+from test import support
 import traceback
 from os import path
 
@@ -154,6 +155,7 @@ def execute_command(
         kill_timer.start()
 
     rc = p.wait()
+    support.reap_children()
     ret_env['return_code'] = rc
 
     if kill_timer:
