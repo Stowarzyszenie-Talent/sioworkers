@@ -7,9 +7,8 @@ from threading import Timer
 import logging
 import re
 import sys
-from test import support
 import traceback
-from os import path
+from os import path, waitpid
 
 from sio.workers import util, elf_loader_patch
 from sio.workers.sandbox import get_sandbox
@@ -155,7 +154,6 @@ def execute_command(
         kill_timer.start()
 
     rc = p.wait()
-    support.reap_children()
     ret_env['return_code'] = rc
 
     if kill_timer:
@@ -640,6 +638,9 @@ class Sio2JailExecutor(SandboxExecutor):
             renv = execute_command(
                 command + [noquote('2>'), result_file.name], **kwargs
             )
+            # reap zombies
+            while pid:
+                pid, _ = os.waitpid(-1, os.WNOHANG)
 
             if renv['return_code'] != 0:
                 raise ExecError(
