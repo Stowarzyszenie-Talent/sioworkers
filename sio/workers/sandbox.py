@@ -272,7 +272,11 @@ class Sandbox(object):
         fixup with given name."""
         if not hasattr(self, 'operative_fixups'):
             operatives_file = os.path.join(self.path, '.fixups_operative')
-            self.operative_fixups = open(operatives_file).read().split('\n')
+            try:
+                self.operative_fixups = open(operatives_file).read().split('\n')
+            except FileNotFoundError:
+                delattr(self, 'operative_fixups')
+                return False
 
         return name in self.operative_fixups
 
