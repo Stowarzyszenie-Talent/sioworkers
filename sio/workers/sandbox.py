@@ -275,6 +275,7 @@ class Sandbox(object):
             try:
                 self.operative_fixups = open(operatives_file).read().split('\n')
             except FileNotFoundError:
+                delattr(self, 'operative_fixups')
                 return False
 
         return name in self.operative_fixups
