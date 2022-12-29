@@ -646,21 +646,29 @@ class Sio2JailExecutor(SandboxExecutor):
                 except OSError:
                     break
 
+            result_file.seek(0)
+            full_result = result_file.read(10240)
             if renv["return_code"] != 0:
+                result_file.close()
                 raise ExecError(
                     "Sio2Jail returned code %s, stderr: %s"
-                    % (renv["return_code"], result_file.read(10240))
+                    % (renv["return_code"], full_result)
                 )
 
             result_file.seek(0)
             status_line = result_file.readline().strip().split()[1:]
             renv["result_string"] = result_file.readline().strip()
             result_file.close()
-            for num, key in enumerate(
-                ("result_code", "time_used", None, "mem_used", None)
-            ):
-                if key:
-                    renv[key] = int(status_line[num])
+            try:
+                for num, key in enumerate(
+                    ("result_code", "time_used", None, "mem_used", None)
+                ):
+                    if key:
+                        renv[key] = int(status_line[num])
+            except ValueError: # "Exception occured" won't be an int
+                raise ExecError(
+                    "Unrecognized Sio2Jail output, stderr: %s" % full_result
+                )
 
             if renv["result_string"] == b'ok':
                 renv["result_code"] = b'OK'
