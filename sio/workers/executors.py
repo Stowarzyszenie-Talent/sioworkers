@@ -671,17 +671,17 @@ class Sio2JailExecutor(SandboxExecutor):
                 )
 
             if renv["result_string"] == b'ok':
-                renv["result_code"] = b'OK'
+                renv["result_code"] = 'OK'
             elif renv["result_string"] == b'time limit exceeded':
-                renv["result_code"] = b'TLE'
+                renv["result_code"] = 'TLE'
             elif renv["result_string"] == b'real time limit exceeded':
-                renv["result_code"] = b'TLE'
+                renv["result_code"] = 'TLE'
             elif renv["result_string"] == b'memory limit exceeded':
-                renv["result_code"] = b'MLE'
+                renv["result_code"] = 'MLE'
             elif renv["result_string"].startswith(b'intercepted forbidden syscall'):
-                renv["result_code"] = b'RV'
+                renv["result_code"] = 'RV'
             elif renv["result_string"].startswith(b'process exited due to signal'):
-                renv["result_code"] = b'RE'
+                renv["result_code"] = 'RE'
             else:
                 raise ExecError(
                     "Unrecognized Sio2Jail result string: %s" % renv["result_string"]
@@ -695,7 +695,7 @@ class Sio2JailExecutor(SandboxExecutor):
                 str(os.listdir(tempcwd())),
             )
 
-            renv["result_code"] = b'SE'
+            renv["result_code"] = 'SE'
             for i in ("time_used", "mem_used"):
                 renv.setdefault(i, 0)
             renv["result_string"] = str(e)
