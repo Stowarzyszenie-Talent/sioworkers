@@ -632,52 +632,82 @@ class Sio2JailExecutor(SandboxExecutor):
         command = [os.path.join(self.rpath, 'sio2jail')] + options + ['--'] + command
 
         renv = {}
+        renvNew = {}
+        renv['mem_used']=0
+        renv['time_used']=0
+        renv['real_time_used']=0
         try:
-            result_file = tempfile.NamedTemporaryFile(dir=tempcwd())
-            kwargs['ignore_errors'] = True
-            renv = execute_command(
-                command + [noquote('2>'), result_file.name], **kwargs
-            )
-            # reap zombies
-            pid=1
-            while pid!=0:
-                try:
-                    pid, _ = os.waitpid(-1, os.WNOHANG)
-                except OSError:
+            kwargs['execCycle'] = 1
+            executionCycles = kwargs['execCycle']
+            if not isinstance(executionCycles, int):
+                executionCycles=1
+            if executionCycles < 1:
+                executionCycles=1
+            lastFile='in'
+            for i in range(1, executionCycles+1):    
+                logger.info(executionCycles)
+                result_file = tempfile.NamedTemporaryFile(dir=tempcwd())
+                kwargs['ignore_errors'] = True
+                outFile='midFile_'+str(i)
+                if i == executionCycles:
+                    outFile='out'
+                logger.info(outFile)
+                with open(tempcwd(lastFile), 'rb') as stdin:
+                    with open(tempcwd(outFile), 'ab') as stdout:
+                        kwargs['stdin']=stdin
+                        kwargs['stdout']=stdout
+                        renvNew = execute_command(
+                            command + [noquote('2>'), result_file.name], **kwargs
+                        )
+                lastFile=outFile
+                logger.info(renv)
+                # reap zombies
+                pid=1
+                while pid!=0:
+                    try:
+                        pid, _ = os.waitpid(-1, os.WNOHANG)
+                    except OSError:
+                        break
+
+                if renvNew['return_code'] != 0:
+                    raise ExecError(
+                        'Sio2Jail returned code %s, stderr: %s'
+                        % (renv['return_code'], result_file.read(10240))
+                    )
+
+                result_file.seek(0)
+                status_line = result_file.readline().strip().split()[1:]
+                renv['result_string'] = result_file.readline().strip()
+                renv['real_time_used'] = max(renv['real_time_used'], renvNew['real_time_used'])
+                result_file.close()
+                for num, key in enumerate(
+                    ('result_code', 'time_used', None, 'mem_used', None)
+                ):
+                    if key:
+                        if key=='mem_used' or key == 'time_used':
+                            logger.info(renv[key])
+                            renv[key] = max(int(status_line[num]),renv[key])
+                        else:
+                            renv[key] = int(status_line[num])
+
+                if renv['result_string'] == b'ok':
+                    renv['result_code'] = 'OK'
+                elif renv['result_string'] == b'time limit exceeded':
+                    renv['result_code'] = 'TLE'
+                elif renv['result_string'] == b'real time limit exceeded':
+                    renv['result_code'] = 'TLE'
+                elif renv['result_string'] == b'memory limit exceeded':
+                    renv['result_code'] = 'MLE'
+                elif renv['result_string'].startswith(b'intercepted forbidden syscall'):
+                    renv['result_code'] = 'RV'
+                elif renv['result_string'].startswith(b'process exited due to signal'):
+                    renv['result_code'] = 'RE'
+                else:
+                    raise ExecError(
+                        'Unrecognized Sio2Jail result string: %s' % renv['result_string']
+                    )
+                if renv['result_code'] != 'OK':
                     break
-
-            if renv['return_code'] != 0:
-                raise ExecError(
-                    'Sio2Jail returned code %s, stderr: %s'
-                    % (renv['return_code'], result_file.read(10240))
-                )
-
-            result_file.seek(0)
-            status_line = result_file.readline().strip().split()[1:]
-            renv['result_string'] = result_file.readline().strip()
-            result_file.close()
-            for num, key in enumerate(
-                ('result_code', 'time_used', None, 'mem_used', None)
-            ):
-                if key:
-                    renv[key] = int(status_line[num])
-
-            if renv['result_string'] == b'ok':
-                renv['result_code'] = 'OK'
-            elif renv['result_string'] == b'time limit exceeded':
-                renv['result_code'] = 'TLE'
-            elif renv['result_string'] == b'real time limit exceeded':
-                renv['result_code'] = 'TLE'
-            elif renv['result_string'] == b'memory limit exceeded':
-                renv['result_code'] = 'MLE'
-            elif renv['result_string'].startswith(b'intercepted forbidden syscall'):
-                renv['result_code'] = 'RV'
-            elif renv['result_string'].startswith(b'process exited due to signal'):
-                renv['result_code'] = 'RE'
-            else:
-                raise ExecError(
-                    'Unrecognized Sio2Jail result string: %s' % renv['result_string']
-                )
 
         except (EnvironmentError, EOFError, RuntimeError) as e:
             logger.error('Sio2JailExecutor error: %s', traceback.format_exc())
