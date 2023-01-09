@@ -670,6 +670,8 @@ class Sio2JailExecutor(SandboxExecutor):
                 renv['result_code'] = 'TLE'
             elif renv['result_string'] == b'memory limit exceeded':
                 renv['result_code'] = 'MLE'
+            elif renv['result_string'] == b'output limit exceeded':
+                    renv['result_code'] = 'OLE'
             elif renv['result_string'].startswith(b'intercepted forbidden syscall'):
                 renv['result_code'] = 'RV'
             elif renv['result_string'].startswith(b'process exited due to signal'):

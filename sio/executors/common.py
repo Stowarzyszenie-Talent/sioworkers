@@ -55,6 +55,12 @@ def run(environ, executor, use_sandboxes=True):
             inFilename = outFilename
             _populate_environ(renv, environ)
             if environ['result_code'] != 'OK':
+                if executionCycles != 0:
+                    try:
+                        environ['result_string'] = environ['result_string'].decode()
+                    except (UnicodeDecodeError, AttributeError):
+                        pass
+                    environ['result_string'] = '[execution '+str(i)+' out of '+str(executionCycles)+'] '+ environ['result_string']
                 break
     
     if environ['result_code'] == 'OK' and environ.get('check_output'):
