@@ -36,7 +36,7 @@ def run(environ, executor, use_sandboxes=True):
     """
     ###### environ['execCycle'] = 2
 
-    executionCycles = environ['execCycle']
+    executionCycles = environ.get('execCycle', 1)
     if not isinstance(executionCycles, int):
         executionCycles = 1
     if executionCycles < 1:
