@@ -34,7 +34,6 @@ def run(environ, executor, use_sandboxes=True):
     :param: use_sandboxes Enables safe checking output correctness.
                        See `sio.executors.checkers`. True by default.
     """
-    ###### environ['execCycle'] = 2
 
     executionCycles = environ.get('execCycle', 1)
     if not isinstance(executionCycles, int):
@@ -42,7 +41,6 @@ def run(environ, executor, use_sandboxes=True):
     if executionCycles < 1:
         executionCycles = 1
 
-    logger.info(environ)
     if environ.get('exec_info', {}).get('mode') == 'output-only':
         renv = _fake_run_as_exe_is_output_file(environ)
         _populate_environ(renv, environ)
@@ -58,8 +56,7 @@ def run(environ, executor, use_sandboxes=True):
             _populate_environ(renv, environ)
             if environ['result_code'] != 'OK':
                 break
-    logger.info(environ)
-
+    
     if environ['result_code'] == 'OK' and environ.get('check_output'):
         environ = checker.run(environ, use_sandboxes=use_sandboxes)
 
