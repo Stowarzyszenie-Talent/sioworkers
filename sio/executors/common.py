@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+import logging
 import os
 from shutil import rmtree
 from zipfile import ZipFile, is_zipfile
@@ -9,11 +10,12 @@ from sio.workers.file_runners import get_file_runner
 from sio.executors import checker
 import six
 
+logger = logging.getLogger(__name__)
 
 def _populate_environ(renv, environ):
     """Takes interesting fields from renv into environ"""
     for key in ('time_used', 'mem_used', 'num_syscalls'):
-        environ[key] = renv.get(key, 0)
+        environ[key] = max(renv.get(key, 0), environ.get(key, 0))
     for key in ('result_code', 'result_string'):
         environ[key] = renv.get(key, '')
     if 'out_file' in renv:
@@ -32,13 +34,31 @@ def run(environ, executor, use_sandboxes=True):
     :param: use_sandboxes Enables safe checking output correctness.
                        See `sio.executors.checkers`. True by default.
     """
+    ###### environ['execCycle'] = 2
 
+    executionCycles = environ['execCycle']
+    if not isinstance(executionCycles, int):
+        executionCycles = 1
+    if executionCycles < 1:
+        executionCycles = 1
+
+    logger.info(environ)
     if environ.get('exec_info', {}).get('mode') == 'output-only':
         renv = _fake_run_as_exe_is_output_file(environ)
+        _populate_environ(renv, environ)
     else:
-        renv = _run(environ, executor, use_sandboxes)
-
-    _populate_environ(renv, environ)
+        inFilename = ""
+        for i in range(1, executionCycles+1):
+            outFilename = 'midFile_'+str(i)
+            if i == executionCycles:
+                outFilename = 'out'
+            renv = _run(environ, executor, use_sandboxes,
+                        outFilename, inFilename)
+            inFilename = outFilename
+            _populate_environ(renv, environ)
+            if environ['result_code'] != 'OK':
+                break
+    logger.info(environ)
 
     if environ['result_code'] == 'OK' and environ.get('check_output'):
         environ = checker.run(environ, use_sandboxes=use_sandboxes)
@@ -57,15 +77,22 @@ def run(environ, executor, use_sandboxes=True):
     return environ
 
 
-def _run(environ, executor, use_sandboxes):
-    input_name = tempcwd('in')
+def _run(environ, executor, use_sandboxes, outFilename, inFilename):
+
+    input_name = tempcwd(inFilename)
+    downloadTest = False
+    if inFilename == "":
+        input_name = tempcwd('in')
+        downloadTest = True
+    logger.info(input_name)
 
     file_executor = get_file_runner(executor, environ)
     exe_filename = file_executor.preferred_filename()
 
     ft.download(environ, 'exe_file', exe_filename, add_to_cache=True)
     os.chmod(tempcwd(exe_filename), 0o700)
-    ft.download(environ, 'in_file', input_name, add_to_cache=True)
+    if downloadTest == True:
+        ft.download(environ, 'in_file', input_name, add_to_cache=True)
 
     zipdir = tempcwd('in_dir')
     os.mkdir(zipdir)
@@ -88,7 +115,7 @@ def _run(environ, executor, use_sandboxes):
                 # Open output file in append mode to allow appending
                 # only to the end of the output file. Otherwise,
                 # a contestant's program could modify the middle of the file.
-                with open(tempcwd('out'), 'ab') as outf:
+                with open(tempcwd(outFilename), 'ab') as outf:
                     renv = fe(
                         tempcwd(exe_filename),
                         [],
