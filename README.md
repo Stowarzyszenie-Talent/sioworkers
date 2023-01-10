@@ -1,9 +1,5 @@
-# What is this repo?
-The version of sioworkers used by Stowarzyszenie Talent. 
-It's deployed on wyzwania.programuj.edu.pl and
-locally on camps.
-
-See the respective branches for additional info.
+# WARNING
+This branch is bases on an older version of sioworkers.
 
 # Additional features
  - support for the GCC 10.2.1 compilation sandbox,
