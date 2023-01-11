@@ -40,7 +40,7 @@ def run(environ, executor, use_sandboxes=True):
         executionCycles = 1
     if executionCycles < 1:
         executionCycles = 1
-
+    environ['out_filename'] = 'out'
     if environ.get('exec_info', {}).get('mode') == 'output-only':
         renv = _fake_run_as_exe_is_output_file(environ)
         _populate_environ(renv, environ)
@@ -54,16 +54,19 @@ def run(environ, executor, use_sandboxes=True):
                         outFilename, inFilename)
             inFilename = outFilename
             _populate_environ(renv, environ)
+            environ['out_filename']=outFilename
             if environ['result_code'] != 'OK':
-                if executionCycles != 0:
+                if executionCycles != 1:
                     try:
                         environ['result_string'] = environ['result_string'].decode()
                     except (UnicodeDecodeError, AttributeError):
                         pass
-                    environ['result_string'] = '[execution '+str(i)+' out of '+str(executionCycles)+'] '+ environ['result_string']
+                    environ['result_string'] = '[execution ' + \
+                        str(i)+' out of '+str(executionCycles) + \
+                        '] ' + environ['result_string']
                 break
     
-    if environ['result_code'] == 'OK' and environ.get('check_output'):
+    if (environ['result_code'] == 'OK' or environ.get('advanced_checher_control', False) == True) and environ.get('check_output'):
         environ = checker.run(environ, use_sandboxes=use_sandboxes)
 
     for key in ('result_code', 'result_string'):
@@ -73,7 +76,7 @@ def run(environ, executor, use_sandboxes=True):
         ft.upload(
             environ,
             'out_file',
-            tempcwd('out'),
+            tempcwd(environ['out_filename']),
             to_remote_store=environ.get('upload_out', False),
         )
 
@@ -137,7 +140,7 @@ def _run(environ, executor, use_sandboxes, outFilename, inFilename):
 
 def _fake_run_as_exe_is_output_file(environ):
     # later code expects 'out' file to be present after compilation
-    ft.download(environ, 'exe_file', tempcwd('out'))
+    ft.download(environ, 'exe_file', tempcwd(environ['out_filename']))
     return {
         # copy filetracker id of 'exe_file' as 'out_file' (thanks to that checker will grab it)
         'out_file': environ['exe_file'],
