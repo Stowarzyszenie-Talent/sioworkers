@@ -26,7 +26,6 @@ def _populate_environ(renv, environ):
 def run(environ, executor, use_sandboxes=True):
     """
     Common code for executors.
-
     :param: environ Recipe to pass to `filetracker` and `sio.workers.executors`
                     For all supported options, see the global documentation for
                     `sio.workers.executors` and prefix them with ``exec_``.
