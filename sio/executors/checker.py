@@ -41,7 +41,7 @@ def _run_in_executor(env, command, executor, **kwargs):
 def _run_diff(env):
     renv = _run_in_executor(
         env,
-        ['diff', '-b', '-q', 'out', 'hint'],
+        ['diff', '-b', '-q', env['out_filename'], 'hint'],
         UnprotectedExecutor(),
         extra_ignore_errors=(1,),
     )
@@ -49,7 +49,10 @@ def _run_diff(env):
 
 
 def _run_checker(env, use_sandboxes=False):
-    command = ['./chk', 'in', 'out', 'hint']
+    command = ['./chk', 'in', env['out_filename'], 'hint']
+    if env.get('advanced_checher_control', False) == True:
+        command = ['./chk', 'in', env['out_filename'], 'hint', env['result_code'],
+                   str(env['time_used']), str(env['mem_used'])]
 
     def execute_checker(with_stderr=False, stderr=None):
         if env.get('untrusted_checker', False) and use_sandboxes:
@@ -88,7 +91,7 @@ def _run_checker(env, use_sandboxes=False):
 def _run_compare(env):
     e = SandboxExecutor('exec-sandbox')
     renv = _run_in_executor(
-        env, [os.path.join('bin', 'compare'), 'hint', 'out'], e, ignore_errors=True
+        env, [os.path.join('bin', 'compare'), 'hint', env['out_filename']], e, ignore_errors=True
     )
     return renv['stdout']
 
@@ -101,7 +104,7 @@ def _limit_length(s):
 
 
 def run(environ, use_sandboxes=True):
-    ft.download(environ, 'out_file', 'out', skip_if_exists=True)
+    ft.download(environ, 'out_file', environ['out_filename'], skip_if_exists=True)
     ft.download(environ, 'hint_file', 'hint', add_to_cache=True)
 
     try:
@@ -111,12 +114,17 @@ def run(environ, use_sandboxes=True):
             )
             ft.download(environ, 'chk_file', 'chk', add_to_cache=True)
             os.chmod(tempcwd('chk'), 0o700)
-
             output = _run_checker(environ, use_sandboxes)
-        elif use_sandboxes:
-            output = _run_compare(environ)
         else:
-            output = _run_diff(environ)
+            if environ.get('advanced_checher_control', False) == True:
+                environ['result_code'] = 'SE'
+                environ['result_string'] = 'advanced_checher_control enabled without custom checher'
+                environ['result_percentage'] = 0
+                return environ
+            elif use_sandboxes:
+                output = _run_compare(environ)
+            else:
+                output = _run_diff(environ)
     except (CheckerError, ExecError) as e:
         logger.error('Checker failed! %s', e)
         logger.error('Environ dump: %s', environ)
