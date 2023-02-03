@@ -670,7 +670,6 @@ class Sio2JailExecutor(SandboxExecutor):
                     "Unrecognized Sio2Jail output, stderr: %s" % full_result
                 )
 
-
             if renv["result_string"] == b'ok':
                 renv["result_code"] = 'OK'
             elif renv["result_string"] == b'time limit exceeded':

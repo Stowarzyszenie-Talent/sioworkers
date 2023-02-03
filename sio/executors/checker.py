@@ -116,13 +116,12 @@ def run(environ, use_sandboxes=True):
             os.chmod(tempcwd('chk'), 0o700)
             output = _run_checker(environ, use_sandboxes)
         else:
-            if environ['result_code'] != 'OK' and environ.get('advanced_checher_control', False) == True:
+            if environ.get('advanced_checher_control', False) == True:
                 environ['result_code'] = 'SE'
                 environ['result_string'] = 'advanced_checher_control enabled without custom checher'
                 environ['result_percentage'] = 0
                 return environ
             elif use_sandboxes:
-                logger.info("cmp")
                 output = _run_compare(environ)
             else:
                 output = _run_diff(environ)
