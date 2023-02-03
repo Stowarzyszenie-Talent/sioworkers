@@ -10,7 +10,6 @@ from sio.workers.file_runners import get_file_runner
 from sio.executors import checker
 import six
 
-logger = logging.getLogger(__name__)
 
 def _populate_environ(renv, environ):
     """Takes interesting fields from renv into environ"""
@@ -89,7 +88,6 @@ def _run(environ, executor, use_sandboxes, outFilename, inFilename):
     if inFilename == "":
         input_name = tempcwd('in')
         downloadTest = True
-    logger.info(input_name)
 
     file_executor = get_file_runner(executor, environ)
     exe_filename = file_executor.preferred_filename()
