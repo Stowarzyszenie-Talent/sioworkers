@@ -90,6 +90,7 @@ def _run_compare(env):
     renv = _run_in_executor(
         env, [os.path.join('bin', 'compare'), 'hint', 'out'], e, ignore_errors=True
     )
+    renv['stdout'][1]="" # Clearing the stupid test comments
     return renv['stdout']
 
 
