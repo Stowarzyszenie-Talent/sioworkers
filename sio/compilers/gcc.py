@@ -21,6 +21,7 @@ class CPPCompiler(CStyleCompiler):
         obj.compiler = 'g++'
         obj.options = ['-std=c++11', '-static', '-O2', '-s', '-lm']
         return obj
+
     @classmethod
     def gcc_10_2_1_cpp17(cls):
         obj = cls('gcc.10_2_1')
@@ -45,7 +46,7 @@ def run_gplusplus10_2_1_cpp17(environ):
 
 
 def run_gplusplus_default(environ):
-    return CPPCompiler.gcc_4_8_2_cpp11().compile(environ)
+    return CPPCompiler.gcc_10_2_1_cpp17().compile(environ)
 
 
 run_c_default = run_gcc_default
