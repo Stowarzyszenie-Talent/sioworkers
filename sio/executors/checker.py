@@ -107,7 +107,8 @@ def _limit_length(s):
 def run(environ, use_sandboxes=True):
     ft.download(environ, 'out_file', environ['out_filename'], skip_if_exists=True)
     ft.download(environ, 'hint_file', 'hint', add_to_cache=True)
-
+    if environ.get('advanced_checher_control', False) == True:
+        environ['time_used'] = min(environ['time_used'], environ['exec_time_limit'])
     try:
         if environ.get('chk_file'):
             ft.download(

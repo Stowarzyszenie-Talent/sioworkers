@@ -52,7 +52,7 @@ def run(environ, executor, use_sandboxes=True):
                         outFilename, inFilename)
             inFilename = outFilename
             _populate_environ(renv, environ)
-            environ['out_filename']=outFilename
+            environ['out_filename'] = outFilename
             if environ['result_code'] != 'OK':
                 if executionCycles != 1:
                     try:
@@ -63,7 +63,7 @@ def run(environ, executor, use_sandboxes=True):
                         str(i)+' out of '+str(executionCycles) + \
                         '] ' + environ['result_string']
                 break
-    
+
     if (environ['result_code'] == 'OK' or environ.get('advanced_checher_control', False) == True) and environ.get('check_output'):
         environ = checker.run(environ, use_sandboxes=use_sandboxes)
 

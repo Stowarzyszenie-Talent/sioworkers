@@ -14,15 +14,15 @@ python3_specific_requirements = [
 ]
 
 python23_universal_requirements = [
-    'filetracker>=2.1.5,<3.0',
-    'simplejson==3.14.0',
-    'Twisted==20.3.0',
-    'sortedcontainers==2.1.0',
+    #'filetracker>=2.1.5,<3.0',
+    'simplejson',
+    'Twisted',
+    'sortedcontainers',
     'six',
-    'pytest>=4.6,<4.7',
-    'pytest-runner==5.1',
-    'pytest-timeout==1.3.3',
-    'urllib3<2.0',  # urllib3 will drop support for python2 in version 2.0.
+    'pytest',
+    'pytest-runner',
+    'pytest-timeout',
+    'urllib3',  # urllib3 will drop support for python2 in version 2.0.
 ]
 
 if PYTHON_VERSION == 2:
