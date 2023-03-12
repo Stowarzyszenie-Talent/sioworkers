@@ -1,0 +1,14 @@
+diff --git a/setup.py b/setup.py
+index ef4782e..86c1fb1 100644
+--- a/setup.py
++++ b/setup.py
+@@ -19,9 +19,6 @@ python23_universal_requirements = [
+     'Twisted<22.11',
+     'sortedcontainers<2.5',
+     'six<1.17',
+-    'pytest<7.3',
+-    'pytest-runner<6.1',
+-    'pytest-timeout<2.2',
+     'urllib3<1.27',  # urllib3 will drop support for python2 in version 2.0.
+ ]
+ 
