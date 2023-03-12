@@ -1,0 +1,94 @@
+{
+  "nodes": {
+    "filetracker": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1685816707,
+        "narHash": "sha256-rvcjyhVXvtnLpLS4k7UJGNQPLrzLAFWfICfTofRXIJw=",
+        "owner": "Stowarzyszenie-Talent",
+        "repo": "filetracker",
+        "rev": "62dad844ffd632fa4008e9574dfcef6f308611a7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Stowarzyszenie-Talent",
+        "repo": "filetracker",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1676283394,
+        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
+      "locked": {
+        "lastModified": 1678901627,
+        "narHash": "sha256-U02riOqrKKzwjsxc/400XnElV+UtPUQWpANPlyazjH0=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "93a2b84fc4b70d9e089d029deacc3583435c2ed6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1678461335,
+        "narHash": "sha256-c0hY5CTblked46aE9F+cl3vybN6zj95TCo5mD7PbvDs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0eddcb123b98fe42f446cea280ff9278719b4857",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "release-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1680611117,
+        "narHash": "sha256-AoqgKzvoBTE+Yawnkqj/IEq1JeIeDrfUqU75vxlSM4E=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "bf2543f6d4090ed8df8bdefcaecf09d00f7db9f0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "release-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "filetracker": "filetracker",
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs_2"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
