@@ -20,12 +20,12 @@ from sio.workers.elf_loader_patch import _patch_elf_loader
 from sio.workers.util import rmtree
 
 SANDBOXES_BASEDIR = os.environ.get(
-    'SIO_SANDBOXES_BASEDIR', os.path.expanduser(os.path.join('~', '.sio-sandboxes'))
+    'SIOWORKERS_SANDBOXES_BASEDIR', os.path.expanduser(os.path.join('~', '.sio-sandboxes'))
 )
 SANDBOXES_URL = os.environ.get(
-    'SIO_SANDBOXES_URL', 'http://downloads.sio2project.mimuw.edu.pl/sandboxes'
+    'SIOWORKERS_SANDBOXES_URL', 'http://downloads.sio2project.mimuw.edu.pl/sandboxes'
 )
-CHECK_INTERVAL = int(os.environ.get('SIO_SANDBOXES_CHECK_INTERVAL', 3600))
+CHECK_INTERVAL = int(os.environ.get('SIOWORKERS_SANDBOXES_CHECK_INTERVAL', 3600))
 
 logger = logging.getLogger(__name__)
 

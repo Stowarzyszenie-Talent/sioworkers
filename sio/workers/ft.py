@@ -27,7 +27,8 @@ def get_url_hash(filetracker_url):
 
 def get_cache_dir(filetracker_url):
     folder_name = 'ft_cache_' + get_url_hash(filetracker_url)
-    return os.path.expanduser(os.path.join('~', '.filetracker_cache', folder_name))
+    dir = os.path.expanduser(os.path.join('~', '.filetracker_cache', folder_name))
+    return os.environ.get('SIOWORKERS_FILETRACKER_CACHE', dir)
 
 
 # This function is called at the beginning of run(environ) to
