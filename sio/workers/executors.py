@@ -478,7 +478,7 @@ class SandboxExecutor(UnprotectedExecutor):
             command[0] = os.path.join(self.path, command[0])
 
         env = kwargs.get('env')
-        env['PATH'] = '%s:%s' % (self._env_paths('bin'), env['PATH'])
+        env['PATH'] = '/usr/bin:/bin:%s:%s' % (self._env_paths('bin'), env['PATH'])
 
         if not self.sandbox.has_fixup('elf_loader_patch'):
             env['LD_LIBRARY_PATH'] = self._env_paths('lib')
