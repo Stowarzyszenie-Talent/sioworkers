@@ -122,7 +122,7 @@ class ServerServiceMaker(object):
             options['database'],
             workerm,
             SchedulerClass(workerm),
-            options['max-task-ram'],
+            int(options['max-task-ram']),
         )
         taskm.setServiceParent(workerm)
 
