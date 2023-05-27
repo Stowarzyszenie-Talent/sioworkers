@@ -15,19 +15,19 @@ setup(
 
     install_requires = [
         'filetracker>=2.1.5,<3.0',
-        'bsddb3==6.2.7',
-        'simplejson==3.14.0',
-        'supervisor>=4.0,<4.3',
-        'Twisted==20.3.0',
-        'sortedcontainers==2.1.0',
-        'six',
-        'urllib3>=1.26.14,<2.0',
+        'bsddb3',
+        'simplejson<3.20',
+        #'supervisor>=4.0,<4.3',
+        'Twisted<22.11',
+        'sortedcontainers<2.5',
+        'six<1.17',
+        'urllib3<1.27',
     ],
 
     extras_require = {
         'dev' : [
-            'pytest>=7.2.1,<8.0',
-            'pytest-timeout==2.1.0',
+            'pytest<7.3',
+            'pytest-timeout<2.2',
             'tox',
         ]
     },
