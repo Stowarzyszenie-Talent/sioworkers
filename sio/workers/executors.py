@@ -599,7 +599,7 @@ class Sio2JailExecutor(SandboxExecutor):
     REAL_TIME_LIMIT_ADDEND = 1000  # (in ms)
 
     def __init__(self):
-        super(Sio2JailExecutor, self).__init__('sio2jail_exec-sandbox')
+        super(Sio2JailExecutor, self).__init__('sio2jail_exec-sandbox-1.4.2')
 
     def _execute(self, command, **kwargs):
         options = []
@@ -776,7 +776,7 @@ class PRootExecutor(BaseExecutor):
     def __init__(self, sandbox):
         """``sandbox`` has to be a sandbox name."""
         self.chroot = get_sandbox(sandbox)
-        self.proot = SandboxExecutor('proot-sandbox')
+        self.proot = SandboxExecutor('proot-sandbox_amd64')
 
         self.options = []
         with self.chroot:
