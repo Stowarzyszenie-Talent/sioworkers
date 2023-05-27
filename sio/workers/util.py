@@ -122,7 +122,7 @@ class TemporaryCwd(object):
 
     def __enter__(self):
         self.path = tempfile.mkdtemp(prefix='sioworkers_')
-        logger.info('Using temporary directory %s', self.path)
+        logger.debug('Using temporary directory %s', self.path)
         p = self.path
         if self.extra:
             p = os.path.join(self.path, self.extra)
