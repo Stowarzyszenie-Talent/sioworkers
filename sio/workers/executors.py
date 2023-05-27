@@ -639,21 +639,29 @@ class Sio2JailExecutor(SandboxExecutor):
                 command + [noquote('2>'), result_file.name], **kwargs
             )
 
+            result_file.seek(0)
+            full_result = result_file.read(10240)
             if renv['return_code'] != 0:
                 raise ExecError(
                     'Sio2Jail returned code %s, stderr: %s'
-                    % (renv['return_code'], six.ensure_text(result_file.read(10240)))
+                    % (renv['return_code'], six.ensure_text(full_result))
                 )
 
             result_file.seek(0)
             status_line = six.ensure_text(result_file.readline()).strip().split()[1:]
             renv['result_string'] = six.ensure_text(result_file.readline()).strip()
             result_file.close()
-            for num, key in enumerate(
-                ('result_code', 'time_used', None, 'mem_used', None)
-            ):
-                if key:
-                    renv[key] = int(status_line[num])
+            try:
+                for num, key in enumerate(
+                    ('result_code', 'time_used', None, 'mem_used', None)
+                ):
+                    if key:
+                        renv[key] = int(status_line[num])
+            except ValueError: # "Exception occured" won't be an int
+                raise ExecError(
+                    'Unrecognized Sio2Jail output, stderr: %s' %
+                    six.ensure_text(full_result)
+                )
 
             if renv['result_string'] == 'ok':
                 renv['result_code'] = 'OK'
