@@ -81,6 +81,7 @@
           FILETRACKER_URL = cfg.filetrackerUrl;
           SIOWORKERS_FILETRACKER_CACHE = cfg.filetrackerCache;
           SIOWORKERS_SANDBOXES_BASEDIR = "/var/cache/sioworker/sandboxes";
+          SIOWORKERS_SANDBOXES_URL = "https://otsrv.net/sandboxes/";
         };
 
         script = ''
