@@ -27,14 +27,18 @@ class CStyleCompiler(Compiler):
 
 class CCompiler(CStyleCompiler):
     compiler = 'gcc'
-    # Without -static as there is no static compilation on Mac
-    options = ['-O2', '-s', '-lm']
+    ##### Without -static as there is no static compilation on Mac
+    # I HATE APPLE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    # lost AT LEAST 5 hours because I assumed this code isn't retarded
+    # and uses -static, BUT apparently not
+    options = ['-O2', '-s', '-static', '-lm']
 
 
 class CPPCompiler(CStyleCompiler):
     lang = 'cpp'
     compiler = 'g++'
-    options = ['-std=gnu++0x', '-O2', '-s', '-lm']
+    # why is some weird gnu-extended c++ standard here???
+    options = ['-std=gnu++0x', '-O2', '-s', '-static', '-lm']
 
 
 def run_gcc(environ):
