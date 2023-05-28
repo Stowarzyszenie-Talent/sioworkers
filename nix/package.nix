@@ -29,9 +29,6 @@ buildPythonPackage {
 
   doCheck = false;
 
-  # HACK: This hack works around an issue where the sioworker looks for pytest things when it really doesn't have to
-  patches = [ ./setup-patch.patch ];
-
   nativeBuildInputs = [
     pytest
     pytest-runner
