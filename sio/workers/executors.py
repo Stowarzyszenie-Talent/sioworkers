@@ -603,6 +603,7 @@ class Sio2JailExecutor(SandboxExecutor):
 
     def _execute(self, command, **kwargs):
         options = []
+        options += ['-o', 'oiaug']
         options += ['-b', os.path.join(self.rpath, 'boxes/minimal') + ':/:ro']
         options += [
             '--memory-limit',
@@ -655,38 +656,17 @@ class Sio2JailExecutor(SandboxExecutor):
                 )
 
             result_file.seek(0)
-            status_line = six.ensure_text(result_file.readline()).strip().split()[1:]
+            status_line = six.ensure_text(result_file.readline()).strip().split()
             renv['result_string'] = six.ensure_text(result_file.readline()).strip()
             result_file.close()
+            renv['result_code'] = status_line[0]
             try:
-                for num, key in enumerate(
-                    ('result_code', 'time_used', None, 'mem_used', None)
-                ):
-                    if key:
-                        renv[key] = int(status_line[num])
+                renv['time_used'] = int(status_line[2])
+                renv['mem_used'] = int(status_line[4])
             except ValueError: # "Exception occured" won't be an int
                 raise ExecError(
                     'Unrecognized Sio2Jail output, stderr: %s' %
                     six.ensure_text(full_result)
-                )
-
-            if renv['result_string'] == 'ok':
-                renv['result_code'] = 'OK'
-            elif renv['result_string'] == 'time limit exceeded':
-                renv['result_code'] = 'TLE'
-            elif renv['result_string'] == 'real time limit exceeded':
-                renv['result_code'] = 'TLE'
-            elif renv['result_string'] == 'memory limit exceeded':
-                renv['result_code'] = 'MLE'
-            elif renv['result_string'] == 'output limit exceeded':
-                renv['result_code'] = 'OLE'
-            elif renv['result_string'].startswith('intercepted forbidden syscall'):
-                renv['result_code'] = 'RV'
-            elif renv['result_string'].startswith('process exited due to signal'):
-                renv['result_code'] = 'RE'
-            else:
-                raise ExecError(
-                    'Unrecognized Sio2Jail result string: %s' % renv['result_string']
                 )
 
         except (EnvironmentError, EOFError, RuntimeError) as e:
