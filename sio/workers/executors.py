@@ -598,25 +598,35 @@ class Sio2JailExecutor(SandboxExecutor):
     REAL_TIME_LIMIT_MULTIPLIER = 16
     REAL_TIME_LIMIT_ADDEND = 1000  # (in ms)
 
-    def __init__(self):
-        super(Sio2JailExecutor, self).__init__('sio2jail_exec-sandbox-1.4.2')
+    def __init__(self, use_perf=True):
+        super(Sio2JailExecutor, self).__init__('talent_sio2jail_exec-sandbox-1.4.3')
+        self.use_perf = use_perf
 
     def _execute(self, command, **kwargs):
         options = []
-        options += ['-o', 'oiaug']
         options += ['-b', os.path.join(self.rpath, 'boxes/minimal') + ':/:ro']
         options += [
             '--memory-limit',
             str(kwargs['mem_limit'] or self.DEFAULT_MEMORY_LIMIT) + 'K',
         ]
-        options += [
-            '--instruction-count-limit',
-            str(
-                (kwargs['time_limit'] or self.DEFAULT_TIME_LIMIT)
-                * self.INSTRUCTIONS_PER_VIRTUAL_SECOND
-                // 1000
-            ),
-        ]
+        if self.use_perf:
+            options += ['-o', 'oiaug']
+            options += [
+                '--instruction-count-limit',
+                str(
+                    (kwargs['time_limit'] or self.DEFAULT_TIME_LIMIT)
+                    * self.INSTRUCTIONS_PER_VIRTUAL_SECOND
+                    // 1000
+                ),
+            ]
+        else:
+            options += ['--perf', 'off']
+            options += ['-o', 'oiuser']
+            options += [
+                '--utimelimit',
+                str(kwargs['time_limit'] or self.DEFAULT_TIME_LIMIT) + 'ms',
+            ]
+
         options += [
             '--rtimelimit',
             str(
