@@ -25,16 +25,17 @@ class CStyleCompiler(Compiler):
         return cmdline
 
 
+# -static is needed, as the execs may run in sandboxes
 class CCompiler(CStyleCompiler):
     compiler = 'gcc'
-    # Without -static as there is no static compilation on Mac
-    options = ['-O2', '-s', '-lm']
+    options = ['-O2', '-s', '-static', '-lm']
 
 
 class CPPCompiler(CStyleCompiler):
     lang = 'cpp'
     compiler = 'g++'
-    options = ['-std=gnu++0x', '-O2', '-s', '-lm']
+    # why is some weird gnu-extended c++ standard here???
+    options = ['-std=gnu++0x', '-O2', '-s', '-static', '-lm']
 
 
 def run_gcc(environ):
