@@ -8,7 +8,7 @@ import logging
 import re
 import sys
 import traceback
-from os import path, waitpid
+from os import path
 
 from sio.workers import util, elf_loader_patch
 from sio.workers.sandbox import get_sandbox
@@ -649,13 +649,6 @@ class Sio2JailExecutor(SandboxExecutor):
             renv = execute_command(
                 command + [noquote('2>'), result_file.name], **kwargs
             )
-            # reap zombies
-            pid=1
-            while pid!=0:
-                try:
-                    pid, _ = os.waitpid(-1, os.WNOHANG)
-                except OSError:
-                    break
 
             result_file.seek(0)
             full_result = result_file.read(10240)
