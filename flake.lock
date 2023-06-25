@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1685816707,
-        "narHash": "sha256-rvcjyhVXvtnLpLS4k7UJGNQPLrzLAFWfICfTofRXIJw=",
+        "lastModified": 1687695527,
+        "narHash": "sha256-+ySQP5G88pQcAyE3Q+c4uf45dHkAX2V6AmhF0NZAbh8=",
         "owner": "Stowarzyszenie-Talent",
         "repo": "filetracker",
-        "rev": "62dad844ffd632fa4008e9574dfcef6f308611a7",
+        "rev": "d1e0680464e997f73fe4a69cf5995447ed0b4bec",
         "type": "github"
       },
       "original": {

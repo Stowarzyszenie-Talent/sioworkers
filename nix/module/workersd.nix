@@ -5,7 +5,7 @@
     enable = lib.mkEnableOption "sioworkersd";
 
     package = lib.mkPackageOption pkgs "sioworkers" {
-      default = [ "python38Packages" "sioworkers" ];
+      default = [ "python310Packages" "sioworkers" ];
     };
 
     taskMemoryLimit = lib.mkOption {

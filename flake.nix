@@ -12,7 +12,7 @@
         })
       ];
 
-      sioworkers = with final.python38Packages; toPythonApplication sioworkers;
+      sioworkers = with final.python310Packages; toPythonApplication sioworkers;
     };
 
     nixosModules.default = {

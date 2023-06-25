@@ -2,6 +2,8 @@
 , stdenv
 , lib
 , buildPythonPackage
+, pythonAtLeast
+, pythonOlder
 
 , six
 , filetracker
@@ -21,6 +23,7 @@
 buildPythonPackage {
   pname = "sioworkers";
   version = "1.0";
+  disabled = pythonAtLeast "3.11" || pythonOlder "3.9";
 
   src = builtins.path {
     path = ./..;
