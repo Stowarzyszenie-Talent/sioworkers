@@ -48,8 +48,8 @@ setup(
             'foo = sio.compilers.template:run',
 
             # Sandboxed compilers:
-            'gcc10_2_1_c99 = sio.compilers.gcc:run_c_gcc10_2_1_c99',
-            'g++10_2_1_cpp17 = sio.compilers.gcc:run_cpp_gcc10_2_1_cpp17',
+            'gcc12_2_0_c99 = sio.compilers.gcc:run_c_gcc12_2_0_c99',
+            'g++12_2_0_cpp20 = sio.compilers.gcc:run_cpp_gcc12_2_0_cpp20',
             'fpc2_6_2 = sio.compilers.fpc:run_pas_fpc2_6_2',
             'java1_8 = sio.compilers.java:run_java1_8',
 
