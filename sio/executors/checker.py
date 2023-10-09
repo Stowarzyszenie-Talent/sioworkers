@@ -74,18 +74,23 @@ def _run_checker(env, use_sandboxes=False):
                 stderr=stderr,
             )
 
-    with tempfile.TemporaryFile() as stderr_file:
-        renv = execute_checker(stderr=stderr_file)
-        if renv['return_code'] >= 2:
-            stderr_file.seek(0)
-            stderr = stderr_file.read()
-            raise CheckerError(
-                'Checker returned code(%d) >= 2. Checker stdout: '
-                '"%s", stderr: "%s". Checker environ dump: %s'
-                % (renv['return_code'], renv['stdout'], stderr, env)
-            )
-
-    return renv['stdout']
+    tries = 0
+    while True:
+        with tempfile.TemporaryFile() as stderr_file:
+            renv = execute_checker(stderr=stderr_file)
+            tries += 1
+            if renv['return_code'] == 126 and tries <10 :
+                continue
+            if renv['return_code'] >= 2:
+                stderr_file.seek(0)
+                stderr = stderr_file.read()
+                raise CheckerError(
+                    'Checker returned code(%d) >= 2. Checker stdout: '
+                    '"%s", stderr: "%s". Checker environ dump: %s'
+                    % (renv['return_code'], renv['stdout'], stderr, env)
+                )
+            else:
+                return renv['stdout']
 
 
 def _run_compare(env):
