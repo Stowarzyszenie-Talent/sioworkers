@@ -3,14 +3,16 @@
     "filetracker": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1687695527,
-        "narHash": "sha256-+ySQP5G88pQcAyE3Q+c4uf45dHkAX2V6AmhF0NZAbh8=",
+        "lastModified": 1698517557,
+        "narHash": "sha256-Fi025V9wuNesFeM7HRi02HPnOeuVS2pi3rdDYafH1vY=",
         "owner": "Stowarzyszenie-Talent",
         "repo": "filetracker",
-        "rev": "d1e0680464e997f73fe4a69cf5995447ed0b4bec",
+        "rev": "d1e1ab24fe6d83095bb0dc4bcfa2babe1972db4c",
         "type": "github"
       },
       "original": {
@@ -35,12 +37,15 @@
       }
     },
     "flake-utils_2": {
+      "inputs": {
+        "systems": "systems"
+      },
       "locked": {
-        "lastModified": 1678901627,
-        "narHash": "sha256-U02riOqrKKzwjsxc/400XnElV+UtPUQWpANPlyazjH0=",
+        "lastModified": 1694529238,
+        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "93a2b84fc4b70d9e089d029deacc3583435c2ed6",
+        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
         "type": "github"
       },
       "original": {
@@ -51,32 +56,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1678461335,
-        "narHash": "sha256-c0hY5CTblked46aE9F+cl3vybN6zj95TCo5mD7PbvDs=",
+        "lastModified": 1699646590,
+        "narHash": "sha256-f81xS0qN6H1ULTyArpZgdjsly4FY0BnvPXdmSb7hq+o=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0eddcb123b98fe42f446cea280ff9278719b4857",
+        "rev": "1d55765508b8316798429875712dc1ef5e62a2fa",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "release-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1680611117,
-        "narHash": "sha256-AoqgKzvoBTE+Yawnkqj/IEq1JeIeDrfUqU75vxlSM4E=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "bf2543f6d4090ed8df8bdefcaecf09d00f7db9f0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "release-22.11",
+        "ref": "release-23.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -85,7 +74,22 @@
       "inputs": {
         "filetracker": "filetracker",
         "flake-utils": "flake-utils_2",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
       }
     }
   },
