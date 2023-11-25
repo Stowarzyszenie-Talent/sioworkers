@@ -55,6 +55,16 @@
       description = "The amount of memory (in megabytes) this worker will use";
       type = lib.types.ints.unsigned;
     };
+
+    separateStdoutFromJournal = lib.mkOption {
+      default = false;
+      description = ''
+        Redirect sioworker's stdout to a file in /var/log/sio2.
+        You have to ensure that directory exists and rotate the logs yourself,
+        unless you use talentsio, which does the former.
+      '';
+      type = lib.types.bool;
+    };
   };
 
   config =
@@ -100,6 +110,9 @@
           CacheDirectory = "sioworker";
           AmbientCapabilities = [ "CAP_PERFMON" ];
           PIDFile = "/run/sioworker/sioworker.pid";
+          # S*stemd is retarded and tries to open the stdout file first
+          #LogsDirectory = lib.mkIf cfg.separateStdoutFromJournal "sio2";
+          StandardOutput = lib.mkIf cfg.separateStdoutFromJournal "append:/var/log/sio2/sioworker.log";
 
           User = "sioworker";
           Group = "sioworker";

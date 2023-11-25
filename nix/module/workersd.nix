@@ -14,7 +14,6 @@
       type = lib.types.ints.unsigned;
     };
 
-
     worker = lib.mkOption {
       default = { };
       description = "The worker listen address and port";
@@ -47,6 +46,16 @@
           type = lib.types.port;
         };
       };
+    };
+
+    separateStdoutFromJournal = lib.mkOption {
+      default = false;
+      description = ''
+        Redirect sioworkersd's stdout to a file in /var/log/sio2.
+        You have to ensure that directory exists and rotate the logs yourself,
+        unless you use talentsio, which does the former.
+      '';
+      type = lib.types.bool;
     };
   };
 
@@ -91,6 +100,9 @@
           RuntimeDirectory = "sioworkersd";
           StateDirectory = "sioworkersd";
           PIDFile = "/run/sioworkersd/sioworkersd.pid";
+          # S*stemd is retarded and tries to open the stdout file first
+          #LogsDirectory = lib.mkIf cfg.separateStdoutFromJournal "sio2";
+          StandardOutput = lib.mkIf cfg.separateStdoutFromJournal "append:/var/log/sio2/sioworkersd.log";
 
           User = "sioworkersd";
           Group = "sioworkersd";
