@@ -18,15 +18,15 @@ setup(
         'bsddb3<6.3',
         'simplejson<3.20',
         #'supervisor>=4.0,<4.3',
-        'Twisted<22.11',
+        'Twisted>=23.8,<23.9',
         'sortedcontainers<2.5',
         'six<1.17',
-        'urllib3<1.27',
+        'urllib3>=2.0,<2.1',
     ],
 
     extras_require = {
         'dev' : [
-            'pytest<7.3',
+            'pytest<8',
             'pytest-timeout<2.2',
             'tox',
         ]

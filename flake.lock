@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1700943598,
-        "narHash": "sha256-zTY0h/7Z3oMFIUSj3ZQ/h1dvruAGwEAQF/24TI7VSGA=",
+        "lastModified": 1701445174,
+        "narHash": "sha256-H9TtAirAUCnDCgoYGwqU1lWro1O5JVQPfy/neHR4Szk=",
         "owner": "Stowarzyszenie-Talent",
         "repo": "filetracker",
-        "rev": "aa5e2c2397f68e12ba966d5665ec9a08b552d3bd",
+        "rev": "0e4fc26352e46e8beb325812c433e6080a8fc7e1",
         "type": "github"
       },
       "original": {
@@ -59,16 +59,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1699646590,
-        "narHash": "sha256-f81xS0qN6H1ULTyArpZgdjsly4FY0BnvPXdmSb7hq+o=",
+        "lastModified": 1701444729,
+        "narHash": "sha256-XO5N4pNawFTN+OqFbA2SXCFZoGQvpb0rlmkNeE4qTYA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1d55765508b8316798429875712dc1ef5e62a2fa",
+        "rev": "8ce27dc770aabf044910fe18cde1a88e740af6f3",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "release-23.05",
+        "ref": "release-23.11",
         "repo": "nixpkgs",
         "type": "github"
       }

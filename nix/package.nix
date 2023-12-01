@@ -31,11 +31,22 @@ buildPythonPackage {
   };
 
   doCheck = false;
+  NO_JAVA_TESTS = "1";
+  #TEST_SANDBOXES = "1"; # These are broken anyway, `supervisor` moment.
+  # Doesn't set correctly without this for some reason.
+  LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
 
+  # Only for tests
   nativeBuildInputs = [
     pytest
     pytest-runner
     pytest-timeout
+    pkgs.gcc pkgs.fpc
+  ];
+
+  # Only for tests
+  buildInputs = [
+    pkgs.glibc.static
   ];
 
   propagatedBuildInputs = [
@@ -48,4 +59,3 @@ buildPythonPackage {
     bsddb3
   ];
 }
-
