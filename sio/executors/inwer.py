@@ -3,7 +3,7 @@ import logging
 import os
 
 from sio.workers import ft
-from sio.workers.executors import DetailedUnprotectedExecutor, SupervisedExecutor
+from sio.workers.executors import DetailedUnprotectedExecutor, Sio2JailExecutor
 from sio.workers.util import tempcwd
 
 logger = logging.getLogger(__name__)
@@ -36,7 +36,7 @@ def _run_inwer(environ, use_sandboxes=False):
     if 'in_file_name' in environ:
         command.append(environ['in_file_name'])
     if use_sandboxes:
-        executor = SupervisedExecutor()
+        executor = Sio2JailExecutor()
     else:
         executor = DetailedUnprotectedExecutor()
     return _run_in_executor(environ, command, executor, ignore_errors=True)
