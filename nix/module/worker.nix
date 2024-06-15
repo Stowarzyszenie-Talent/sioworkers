@@ -5,7 +5,7 @@
     enable = lib.mkEnableOption "sioworker";
 
     package = lib.mkPackageOption pkgs "sioworkers" {
-      default = [ "python310Packages" "sioworkers" ];
+      default = [ "python311Packages" "sioworkers" ];
     };
 
     filetrackerUrl = lib.mkOption {

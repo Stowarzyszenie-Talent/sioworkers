@@ -23,7 +23,7 @@
 buildPythonPackage {
   pname = "sioworkers";
   version = "1.0";
-  disabled = pythonAtLeast "3.11" || pythonOlder "3.9";
+  disabled = pythonAtLeast "3.12" || pythonOlder "3.9";
 
   src = builtins.path {
     path = ./..;
