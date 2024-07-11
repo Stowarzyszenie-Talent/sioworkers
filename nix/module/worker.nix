@@ -103,6 +103,8 @@
               -r ${builtins.toString cfg.memoryLimit} ${cfg.sioworkersd.host}
         '';
 
+        path = [ pkgs.time pkgs.bash ]; # For executors without sio2jail
+
         serviceConfig = {
           Type = "simple";
 
