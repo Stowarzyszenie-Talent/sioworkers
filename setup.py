@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "sioworkers",
-    version = '1.4.4',
+    version = '1.5.2',
     author = "SIO2 Project Team",
     author_email = 'sio2@sio2project.mimuw.edu.pl',
     description = "Programming contest judging infrastructure",
@@ -37,9 +37,13 @@ setup(
             'ping = sio.workers.ping:run',
             'compile = sio.compilers.job:run',
             'exec = sio.executors.executor:run',
+            'interactive-exec = sio.executors.executor:interactive_run',
             'sio2jail-exec = sio.executors.sio2jail_exec:run',
+            'sio2jail-interactive-exec = sio.executors.sio2jail_exec:interactive_run',
             'cpu-exec = sio.executors.executor:run',
+            'cpu-interactive-exec = sio.executors.executor:interactive_run',
             'unsafe-exec = sio.executors.unsafe_exec:run',
+            'unsafe-interactive-exec = sio.executors.unsafe_exec:interactive_run',
             'ingen = sio.executors.ingen:run',
             'inwer = sio.executors.inwer:run',
         ],
