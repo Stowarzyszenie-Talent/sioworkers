@@ -13,7 +13,7 @@ jobs:
     runs-on: self-hosted
     container:
       image: ubuntu:latest
-      # Not secure.
+      # Not secure. TODO: sio-like settings for s2j.
       options:
         --privileged
 
@@ -34,8 +34,8 @@ jobs:
 
       - name: Install apt dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install libdb-dev fp-compiler fp-units-base fp-units-math
+          apt-get update
+          apt-get install libdb-dev fp-compiler fp-units-base fp-units-math
 
       - name: Cache Python dependencies
         uses: actions/cache@v3
