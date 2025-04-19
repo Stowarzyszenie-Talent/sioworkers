@@ -123,11 +123,11 @@ def run(environ, use_sandboxes=True):
             ft.download(environ, 'chk_file', 'chk', add_to_cache=True)
             os.chmod(tempcwd('chk'), 0o700)
             output = _run_checker(environ, use_sandboxes)
-<<<<<<< HEAD
-||||||| 738aa7a
-        elif use_sandboxes:
-            output = _run_compare(environ)
-=======
+        elif environ.get('advanced_checher_control', False) == True:
+            environ['result_code'] = 'SE'
+            environ['result_string'] = 'advanced_checher_control enabled without custom checher'
+            environ['result_percentage'] = 0
+            return environ
         elif use_sandboxes:
             renv = _run_compare(environ, environ.get('checker_format', 'english_abbreviated'))
             if renv['return_code'] == 0:
@@ -144,17 +144,8 @@ def run(environ, use_sandboxes=True):
                     'oicompare returned code(%d). Checker renv: %s' % (renv['return_code'], renv)
                 )
             return environ
->>>>>>> 74f06a1bb95ddfc2162210f43c0bdf9b49625319
         else:
-            if environ.get('advanced_checher_control', False) == True:
-                environ['result_code'] = 'SE'
-                environ['result_string'] = 'advanced_checher_control enabled without custom checher'
-                environ['result_percentage'] = 0
-                return environ
-            elif use_sandboxes:
-                output = _run_compare(environ)
-            else:
-                output = _run_diff(environ)
+            output = _run_diff(environ)
     except (CheckerError, ExecError) as e:
         logger.error('Checker failed! %s', e)
         logger.error('Environ dump: %s', environ)
