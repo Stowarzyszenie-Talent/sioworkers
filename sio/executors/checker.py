@@ -95,13 +95,12 @@ def _run_checker(env, use_sandboxes=False):
                 return renv['stdout']
 
 
-def _run_compare(env):
-    e = SandboxExecutor('exec-sandbox')
+def _run_compare(env, format):
+    e = SandboxExecutor('oicompare-sandbox-v1.0.2')
     renv = _run_in_executor(
-        env, [os.path.join('bin', 'compare'), 'hint', env['out_filename']], e, ignore_errors=True
+        env, [os.path.join('bin', 'oicompare'), 'hint', env['out_filename'], format], e, ignore_errors=True
     )
-    renv['stdout'][1]="" # Clearing the stupid test comments
-    return renv['stdout']
+    return renv
 
 
 def _limit_length(s):
@@ -124,6 +123,28 @@ def run(environ, use_sandboxes=True):
             ft.download(environ, 'chk_file', 'chk', add_to_cache=True)
             os.chmod(tempcwd('chk'), 0o700)
             output = _run_checker(environ, use_sandboxes)
+<<<<<<< HEAD
+||||||| 738aa7a
+        elif use_sandboxes:
+            output = _run_compare(environ)
+=======
+        elif use_sandboxes:
+            renv = _run_compare(environ, environ.get('checker_format', 'english_abbreviated'))
+            if renv['return_code'] == 0:
+                environ['result_code'] = 'OK'
+                environ['result_percentage'] = (100, 1)
+            elif renv['return_code'] == 1:
+                environ['result_code'] = 'WA'
+                environ['result_percentage'] = (0, 1)
+                # Should be redundant because we are using oicompare with abbreviated output,
+                # but just in case.
+                environ['result_string'] = _limit_length(renv['stdout'][0])
+            else:
+                raise CheckerError(
+                    'oicompare returned code(%d). Checker renv: %s' % (renv['return_code'], renv)
+                )
+            return environ
+>>>>>>> 74f06a1bb95ddfc2162210f43c0bdf9b49625319
         else:
             if environ.get('advanced_checher_control', False) == True:
                 environ['result_code'] = 'SE'
