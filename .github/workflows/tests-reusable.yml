@@ -10,7 +10,18 @@ on:
 jobs:
   test:
     name: Run tests
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    container:
+      image: ubuntu:latest
+      env:
+        DEB_PYTHON_INSTALL_LAYOUT: deb
+        DEBIAN_FRONTEND: noninteractive
+        TZ: Europe/Warsaw
+      # Perhaps this could be hardened even more (and in oioioi's docker-compose too).
+      options:
+        # Epic.
+        --security-opt seccomp:../../../../seccomp.json
+        --cap-add ALL
 
     steps:
       - name: Checkout repository
@@ -29,8 +40,8 @@ jobs:
 
       - name: Install apt dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install libdb-dev fp-compiler fp-units-base fp-units-math
+          apt-get update
+          apt-get install -y libdb-dev fp-compiler fp-units-base fp-units-math gcc g++
 
       - name: Cache Python dependencies
         uses: actions/cache@v3
@@ -47,16 +58,16 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          pip install --user virtualenv
-          virtualenv venv
+          pip3 install --user virtualenv
+          python3 -m venv venv
           . venv/bin/activate
-          pip install -e .[dev]
+          pip3 install -e .[dev]
 
       - name: Run tests
         env:
-          TEST_SANDBOXES: '1'
-          NO_JAVA_TESTS: '0'
-          NO_SIO2JAIL_TESTS: '1'
+          TEST_SANDBOXES: '0'
+          NO_JAVA_TESTS: '1'
+          NO_SIO2JAIL_TESTS: '0'
         run: |
           . venv/bin/activate
           pytest -v
