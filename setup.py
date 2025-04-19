@@ -14,7 +14,7 @@ setup(
     namespace_packages = ['sio', 'sio.compilers', 'sio.executors'],
 
     install_requires = [
-        'filetracker>=2.2.0,<3.0',
+        'filetracker-talent>=2.4.0,<3.0',
         'bsddb3<6.3',
         'simplejson<3.20',
         'supervisor>=4.0,<4.3',
@@ -29,7 +29,7 @@ setup(
             'pytest<8',
             'pytest-timeout<3',
             'tox',
-            'filetracker[server]>=2.1.5,<3.0',
+            'filetracker-talent[server]>=2.4.0,<3.0',
         ]
     },
 
