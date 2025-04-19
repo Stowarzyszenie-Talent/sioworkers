@@ -17,7 +17,6 @@ jobs:
         DEB_PYTHON_INSTALL_LAYOUT: deb
         DEBIAN_FRONTEND: noninteractive
         TZ: Europe/Warsaw
-
       # Perhaps this could be hardened even more (and in oioioi's docker-compose too).
       options:
         --security-opt seccomp:../../../../seccomp.json
@@ -42,19 +41,6 @@ jobs:
         run: |
           apt-get update
           apt-get install -y libdb-dev fp-compiler fp-units-base fp-units-math
-
-      - name: Cache Python dependencies
-        uses: actions/cache@v3
-        env:
-          cache-name: 'cache-pip'
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-dev-${{ env.cache-name }}-${{ inputs.python-version }}-${{ hashFiles('**/setup.py') }}
-          restore-keys: |
-            ${{ runner.os }}-dev-${{ env.cache-name }}-${{ inputs.python-version }}-${{ hashFiles('**/setup.py') }}
-            ${{ runner.os }}-dev-${{ env.cache-name }}-${{ inputs.python-version }}-
-            ${{ runner.os }}-dev-
-            ${{ runner.os }}-
 
       - name: Install Python dependencies
         run: |
