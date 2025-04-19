@@ -17,7 +17,7 @@ jobs:
         DEB_PYTHON_INSTALL_LAYOUT: deb
         DEBIAN_FRONTEND: noninteractive
         TZ: Europe/Warsaw
-        YES_I_HAVE_THE_RIGHT_TO_USE_THIS_BERKELEY_DB_VERSION: 1
+        #YES_I_HAVE_THE_RIGHT_TO_USE_THIS_BERKELEY_DB_VERSION: 1
       # Perhaps this could be hardened even more (and in oioioi's docker-compose too).
       options:
         --security-opt seccomp:../../../../seccomp.json
@@ -41,7 +41,7 @@ jobs:
       - name: Install apt dependencies
         run: |
           apt-get update
-          apt-get install -y libdb-dev fp-compiler fp-units-base fp-units-math
+          apt-get install -y libdb-dev fp-compiler fp-units-base fp-units-math gcc
 
       - name: Install Python dependencies
         run: |
