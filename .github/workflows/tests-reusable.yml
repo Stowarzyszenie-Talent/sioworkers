@@ -44,10 +44,10 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          pip3.11 install --user virtualenv
+          pip3 install --user virtualenv
           virtualenv venv
           . venv/bin/activate
-          pip install -e .[dev]
+          pip3 install -e .[dev]
 
       - name: Run tests
         env:
