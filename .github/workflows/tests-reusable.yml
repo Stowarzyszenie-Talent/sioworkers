@@ -20,7 +20,7 @@ jobs:
 
       # Perhaps this could be hardened even more (and in oioioi's docker-compose too).
       options:
-        --security-opt seccomp:../../seccomp.json
+        --security-opt seccomp:../../../../seccomp.json
         --cap-add ALL
 
     steps:
