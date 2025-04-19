@@ -11,6 +11,11 @@ jobs:
   test:
     name: Run tests
     runs-on: self-hosted
+    container:
+      image: ubuntu:latest
+      # Not secure.
+      options:
+        --privileged
 
     steps:
       - name: Checkout repository
