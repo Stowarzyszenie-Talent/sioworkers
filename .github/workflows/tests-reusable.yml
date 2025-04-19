@@ -13,9 +13,15 @@ jobs:
     runs-on: self-hosted
     container:
       image: ubuntu:latest
-      # Not secure. TODO: sio-like settings for s2j.
+      env:
+        DEB_PYTHON_INSTALL_LAYOUT: deb
+        DEBIAN_FRONTEND: noninteractive
+        TZ: Europe/Warsaw
+
+      # Perhaps this could be hardened even more (and in oioioi's docker-compose too).
       options:
-        --privileged
+        --security-opt seccomp:../seccomp.json,apparmor:unconfined
+        --cap-add ALL
 
     steps:
       - name: Checkout repository
