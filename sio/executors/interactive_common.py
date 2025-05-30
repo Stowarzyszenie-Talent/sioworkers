@@ -152,7 +152,7 @@ def _run(environ, executor, use_sandboxes):
         for pipes in proc_pipes:
             interactor_args.extend([str(pipes.r_interactor), str(pipes.w_interactor)])
 
-        interactor_time_limit = 2 * environ['exec_time_limit']
+        interactor_time_limit = max(2 * environ['exec_time_limit'], 10 * 1000)
 
         class ExecutionWrapper(Thread):
             def __init__(self, executor, *args, **kwargs):
