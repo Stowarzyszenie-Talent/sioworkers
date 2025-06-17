@@ -23,7 +23,7 @@ SANDBOXES_BASEDIR = os.environ.get(
     'SIOWORKERS_SANDBOXES_BASEDIR', os.path.expanduser(os.path.join('~', '.sio-sandboxes'))
 )
 SANDBOXES_URL = os.environ.get(
-    'SIOWORKERS_SANDBOXES_URL', 'http://downloads.sio2project.mimuw.edu.pl/sandboxes'
+    'SIOWORKERS_SANDBOXES_URL', 'https://downloads.sio2project.mimuw.edu.pl/sandboxes'
 )
 CHECK_INTERVAL = int(os.environ.get('SIOWORKERS_SANDBOXES_CHECK_INTERVAL', 3600))
 
