@@ -9,7 +9,7 @@ from sio.workers.util import tempcwd
 logger = logging.getLogger(__name__)
 
 DEFAULT_INWER_TIME_LIMIT = 300000  # in ms
-DEFAULT_INWER_MEM_LIMIT = 256 * 2 ** 10  # in KiB
+DEFAULT_INWER_MEM_LIMIT = 1024 * 2 ** 10  # in KiB
 DEFAULT_INWER_OUTPUT_LIMIT = 10 * 2 ** 10  # in B
 
 
