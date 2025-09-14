@@ -9,9 +9,9 @@
     enable = true;
 
     ensureFiles = {
-      "/sandboxes/compiler-gcc.12_2_0.tar.gz" = pkgs.fetchurl {
-        url = "https://downloads.sio2project.mimuw.edu.pl/sandboxes/compiler-gcc.12_2_0.tar.gz";
-        hash = "sha256-APPGBb4ek3WGFAwA7N6UxQwMppWzrVB1yDIpr1waeC4=";
+      "/sandboxes/compiler-gcc.14_2_0.tar.gz" = pkgs.fetchurl {
+        url = "https://downloads.sio2project.mimuw.edu.pl/sandboxes/compiler-gcc.14_2_0.tar.gz";
+        hash = "sha256-o7jo24itpIQty/P84pzCMZtSrV0nr9mxkTfms9uSias=";
       };
       "/sandboxes/proot-sandbox_amd64.tar.gz" = pkgs.fetchurl {
         url = "https://downloads.sio2project.mimuw.edu.pl/sandboxes/proot-sandbox_amd64.tar.gz";
