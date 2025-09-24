@@ -18,7 +18,7 @@ from sio.workers.util import tempcwd
 logger = logging.getLogger(__name__)
 
 DEFAULT_CHECKER_TIME_LIMIT = 30000  # in ms
-DEFAULT_CHECKER_MEM_LIMIT = 256 * 2 ** 10  # in KiB
+DEFAULT_CHECKER_MEM_LIMIT = 1024 * 2 ** 10  # in KiB
 RESULT_STRING_LENGTH_LIMIT = 1024  # in bytes
 
 
