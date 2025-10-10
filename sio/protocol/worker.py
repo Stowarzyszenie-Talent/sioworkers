@@ -3,16 +3,26 @@ from twisted.internet.protocol import ReconnectingClientFactory
 from twisted.internet import threads
 from sio.workers import runner
 from sio.protocol import rpc
+import os
 import platform
+from queue import SimpleQueue
+from random import shuffle
 from twisted.logger import Logger, LogLevel
 import six
 
 log = Logger()
 
+# This is supposedly thread-safe...
+queue = SimpleQueue()
+
 # ingen replaces the environment, so merge it
 def _runner_wrap(env):
+    # If the queue is somehow empty, then we want to find via an error.
+    cpu = queue.get_nowait()
+    os.sched_setaffinity(0, [cpu])
     renv = runner.run(env)
     env.update(renv)
+    queue.put(cpu)
     return env
 
 
@@ -78,3 +88,7 @@ class WorkerFactory(ReconnectingClientFactory):
             self.name = platform.node()
         else:
             self.name = name
+        cpus = list(range(0, os.cpu_count()))
+        shuffle(cpus)
+        for cpu in cpus:
+            queue.put(cpu)
