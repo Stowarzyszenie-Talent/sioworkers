@@ -1,6 +1,6 @@
 {
   description = "The task runner used by SIO2";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/release-25.05";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.filetracker = {
     url = "github:Stowarzyszenie-Talent/filetracker";
@@ -30,7 +30,7 @@
           })
         ];
 
-        sioworkers = with final.python311Packages; toPythonApplication sioworkers;
+        sioworkers = with final.python312Packages; toPythonApplication sioworkers;
       };
 
       nixosModules.self = {

@@ -11,10 +11,10 @@
 , twisted
 , urllib3
 , sortedcontainers
-, bsddb3
+, berkeleydb
+, supervisor
 
 , pytest
-, pytest-runner
 , pytest-timeout
 
 , ...
@@ -23,7 +23,7 @@
 buildPythonPackage {
   pname = "sioworkers";
   version = "1.0";
-  disabled = pythonAtLeast "3.12" || pythonOlder "3.9";
+  disabled = pythonAtLeast "3.13" || pythonOlder "3.9";
 
   src = builtins.path {
     path = ./..;
@@ -39,7 +39,6 @@ buildPythonPackage {
   # Only for tests
   nativeBuildInputs = [
     pytest
-    pytest-runner
     pytest-timeout
     pkgs.gcc pkgs.fpc
   ];
@@ -56,6 +55,7 @@ buildPythonPackage {
     twisted
     urllib3
     sortedcontainers
-    bsddb3
+    berkeleydb
+    supervisor
   ];
 }

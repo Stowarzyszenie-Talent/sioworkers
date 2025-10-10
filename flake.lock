@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745063354,
-        "narHash": "sha256-/cKFxI7trkm8zeo0HC9VA6pVWwwIZUcvpSv4CIGNsQ8=",
+        "lastModified": 1750272194,
+        "narHash": "sha256-wAMChr/lCKFOCEI5UkgrEDBdWXgRXmM+TZOMn2tOMhQ=",
         "owner": "Stowarzyszenie-Talent",
         "repo": "filetracker",
-        "rev": "e1485f7f373ee95199a1254a675c7715c4177660",
+        "rev": "ec5e3dd005baf4f82bd822ba06c34e3992f875f2",
         "type": "github"
       },
       "original": {
@@ -26,11 +26,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1694529238,
-        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
         "type": "github"
       },
       "original": {
@@ -59,16 +59,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1718519918,
-        "narHash": "sha256-AxckB8YrRJlgh+YHQmf79cUErB5qs29mKVsd2RGwthg=",
+        "lastModified": 1762852306,
+        "narHash": "sha256-VZZdJBeCgttt66Su2Qd97cpx1cjlyzmuq8LVJV1Q+sA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3d29bc78fff528c4b5ab0a1cdf6afc0428b5d6a2",
+        "rev": "0b5980c4cf100adaf575272e371acaf49fba7c44",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "release-24.05",
+        "ref": "release-25.05",
         "repo": "nixpkgs",
         "type": "github"
       }

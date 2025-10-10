@@ -14,19 +14,21 @@ setup(
     namespace_packages = ['sio', 'sio.compilers', 'sio.executors'],
 
     install_requires = [
-        'filetracker-talent>=2.4.0,<3.0',
-        'bsddb3<6.3',
-        'simplejson<3.20',
+        'filetracker-talent>=2.5,<3.0',
+        # The maintainer doesn't really use semver.
+        'berkeleydb==18.1.14',
+        # Unused. TODO:upstream.
+        #'simplejson<3.20',
         'supervisor>=4.0,<4.3',
-        'Twisted==24.3',
+        'Twisted==24.11',
         'sortedcontainers<2.5',
-        'six<1.17',
+        'six<1.18',
         'urllib3>=2.0,<3.0',
     ],
 
     extras_require = {
         'dev' : [
-            'pytest<8',
+            'pytest<9',
             'pytest-timeout<3',
             'tox',
             'filetracker-talent[server]>=2.4.0,<3.0',

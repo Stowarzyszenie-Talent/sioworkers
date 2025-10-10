@@ -21,11 +21,7 @@ from twisted.logger import Logger, LogLevel
 from urllib3 import encode_multipart_formdata
 
 
-try:
-    # For Python2 (broken on Travis)
-    import bsddb
-except ImportError:
-    import bsddb3 as bsddb
+import berkeleydb as bsddb
 
 log = Logger()
 
@@ -90,7 +86,7 @@ class DBWrapper(object):
         job_id = six.ensure_binary(job_id)
         job = json.loads(self.db.get(job_id, '{}'))
         job.update(dict_update)
-        self.db[job_id] = json_dumps(job)
+        self.db[job_id] = six.ensure_binary(json_dumps(job))
         if sync:
             self.db.sync()
 
