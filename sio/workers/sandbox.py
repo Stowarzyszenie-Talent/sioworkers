@@ -345,7 +345,7 @@ class Sandbox(object):
             logger.info(" extracting ...")
 
             tar = tarfile.open(archive_path, 'r')
-            tar.extractall(SANDBOXES_BASEDIR)
+            tar.extractall(SANDBOXES_BASEDIR, filter='fully_trusted')
             os.unlink(archive_path)
 
             if not os.path.isdir(path):
