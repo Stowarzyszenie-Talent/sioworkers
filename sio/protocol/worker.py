@@ -14,15 +14,19 @@ log = Logger()
 
 # This is supposedly thread-safe...
 queue = SimpleQueue()
+all_cpus = list(range(0, os.cpu_count()))
 
 # ingen replaces the environment, so merge it
 def _runner_wrap(env):
     # If the queue is somehow empty, then we want to find via an error.
     cpu = queue.get_nowait()
-    os.sched_setaffinity(0, [cpu])
-    renv = runner.run(env)
-    env.update(renv)
-    queue.put(cpu)
+    try:
+        os.sched_setaffinity(0, [cpu])
+        renv = runner.run(env)
+        env.update(renv)
+    finally:
+        queue.put(cpu)
+        os.sched_setaffinity(0, all_cpus)
     return env
 
 
@@ -88,7 +92,6 @@ class WorkerFactory(ReconnectingClientFactory):
             self.name = platform.node()
         else:
             self.name = name
-        cpus = list(range(0, os.cpu_count()))
-        shuffle(cpus)
-        for cpu in cpus:
+        shuffle(all_cpus)
+        for cpu in all_cpus:
             queue.put(cpu)
