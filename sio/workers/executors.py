@@ -605,7 +605,7 @@ class Sio2JailExecutor(SandboxExecutor):
     REAL_TIME_LIMIT_ADDEND = 1000  # (in ms)
 
     def __init__(self, use_perf=True):
-        super(Sio2JailExecutor, self).__init__('sio2jail_exec-sandbox-1.4.4')
+        super(Sio2JailExecutor, self).__init__('sio2jail_exec-sandbox-1.5.3')
         self.use_perf = use_perf
 
     def _execute(self, command, **kwargs):
