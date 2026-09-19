@@ -12,7 +12,7 @@ from sio.workers.file_runners import get_file_runner
 import signal
 import six
 
-DEFAULT_INTERACTOR_MEM_LIMIT = 256 * 2 ** 10  # in KiB
+DEFAULT_INTERACTOR_MEM_LIMIT = 1024 * 2 ** 10  # in KiB
 RESULT_STRING_LENGTH_LIMIT = 1024  # in bytes
 
 
